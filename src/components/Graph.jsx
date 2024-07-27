@@ -165,8 +165,9 @@ const Graph = () => {
 
     const createEdge = (startNode, endNode) => {
         const { nodes, edges } = getCurrentGraph();
-        const newEdge = { start: startNode, end: endNode };
-        if (!(edges.includes(newEdge) || edges.includes({ start: endNode, end: startNode }))) {
+        const edgeExists = edges.some(edge => (edge.start === startNode && edge.end === endNode) || (edge.start === endNode && edge.end === startNode));
+        if (!edgeExists) {
+            const newEdge = { start: startNode, end: endNode };
             const newEdges = [...edges, newEdge];
             updateCurrentGraph({ id: currentGraph, nodes, edges: newEdges });
             addToHistory(nodes, newEdges);
