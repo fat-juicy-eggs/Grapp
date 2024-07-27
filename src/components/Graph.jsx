@@ -166,9 +166,11 @@ const Graph = () => {
     const createEdge = (startNode, endNode) => {
         const { nodes, edges } = getCurrentGraph();
         const newEdge = { start: startNode, end: endNode };
-        const newEdges = [...edges, newEdge];
-        updateCurrentGraph({ id: currentGraph, nodes, edges: newEdges });
-        addToHistory(nodes, newEdges);
+        if (!(edges.includes(newEdge) || edges.includes({ start: endNode, end: startNode }))) {
+            const newEdges = [...edges, newEdge];
+            updateCurrentGraph({ id: currentGraph, nodes, edges: newEdges });
+            addToHistory(nodes, newEdges);
+        }
     };
 
     const enableEdgeCreationMode = () => {
